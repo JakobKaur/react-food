@@ -1,17 +1,35 @@
 import React, { createContext, useReducer, useEffect } from "react";
 
+
 const CartContext = createContext();
+
 
 const cartReducer = (state, action) => {
   switch (action.type) {
     case "ADD_ITEM":
-      return [...state, action.item];
-    case "REMOVE_ITEM":
-      return state.filter((item) => item.id !== action.id);
+      const existingItemIndex = state.findIndex(
+        (item) => item.id === action.item.id
+      );
+
+      if (existingItemIndex !== -1) {
+        return state.map((item, index) => {
+          if (index === existingItemIndex) {
+            return { ...item, quantity: item.quantity + 1 };
+          }
+          return item;
+        });
+      } else {
+        return [...state, { ...action.item, quantity: 1 }];
+      }
+
+    case "RESET_CART":
+      return [];
+
     default:
       return state;
   }
 };
+
 
 export const CartProvider = ({ children }) => {
   const [cart, dispatch] = useReducer(cartReducer, []);

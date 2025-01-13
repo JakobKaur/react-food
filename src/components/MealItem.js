@@ -1,6 +1,7 @@
 import Button from "./UI/Button";
-import { useContext } from "react";
 import CartContext from "../store/CartContext";
+import { useContext } from "react";
+
 
 const MealItem = (props) => {
   const { dispatch } = useContext(CartContext);
