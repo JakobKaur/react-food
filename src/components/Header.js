@@ -1,17 +1,22 @@
-import logo from '../assets/logo.jpg'
+import logo from "../assets/logo.jpg";
+import Button from "./UI/Button";
+import { useContext } from "react";
+import CartContext from "../store/CartContext";
 
 const Header = () => {
-    return (
-        <header id="main-header">
-            <div id="title">
-                <img src={logo}/>
-                <h1>React Food Order App</h1>
-            </div>
-            <nav>
-            <button>Cart (0)</button>
-            </nav>
-        </header>
-    )
-}
+  const { cart } = useContext(CartContext);
 
-export default Header
+  return (
+    <header id="main-header">
+      <div id="title">
+        <img src={logo} alt="Logo" />
+        <h1>React Food Order App</h1>
+      </div>
+      <nav>
+        <Button textOnly={true}>Cart ({cart.length})</Button>
+      </nav>
+    </header>
+  );
+};
+
+export default Header;
